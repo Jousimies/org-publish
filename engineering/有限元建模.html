@@ -6,8 +6,8 @@
 <!-- 2022-10-21 Fri 02:10 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Duan Ning</title>
-<meta name="author" content="Jousimies" />
+<title>有限元建模方法</title>
+<meta name="author" content="Duan Ning" />
 <meta name="generator" content="Org Mode" />
 <style>
   #content { max-width: 60em; margin: auto; }
@@ -193,51 +193,46 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   .org-svg { }
 </style>
-<link rel="stylesheet" type="text/css" href="css/style.css"/>
+<link rel="stylesheet" type="text/css" href="../css/style.css"/>
 </head>
 <body>
 <div id="preamble" class="status">
 <a href="/index.html" class="button">HOME</a>
 </div>
 <div id="content" class="content">
-<h1 class="title">Duan Ning</h1>
+<h1 class="title">有限元建模方法</h1>
 <blockquote>
 <p>
-If I have seen further, it is by standing on the shoulders of giants. —- Sir Isaac Newton
+根据建模方法的不同，钢筋混凝土结构有限元分析模型可分为分离式模型、整体式模型和组合式模型。
+</p>
+
+<p>
+分离式模型把混凝土和钢筋作为不同的单元处理，分别计算混凝土单元和钢筋单元刚度矩阵，然后一并集成到整体刚度矩阵中，且通常忽略钢筋的抗剪刚度，将其作为线性单元处理；
+</p>
+
+<p>
+整体式模型则将钢筋分布于整个单元中，钢筋被化为等效的混凝土，然后按一种材料计算单元刚度矩阵；
+</p>
+
+<p>
+组合式模型包含了钢筋与混凝土两种材料，在推导单元刚度矩阵时，在考虑不同材料特性的基础上，采用统一的位移函数同时计算单元刚度矩阵，单元刚度矩阵中已包括了混凝土和钢筋两种材料对单元刚度矩阵的贡献<sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup>。
 </p>
 </blockquote>
-<p>
-欢迎来到我的个人博客。我是一名土木工程师，但是我的爱好是计算机。
-</p>
-<div id="outline-container-org642b613" class="outline-2">
-<h2 id="org642b613">Projects</h2>
-<div class="outline-text-2" id="text-org642b613">
-<p>
-<a href="notes/emacs_config.html">My emacs configuratons</a>
-</p>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1" role="doc-backlink">1</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+{邓清}, (2018). "板柱节点冲切受力性能及承载力计算方法研究".
+</p></div></div>
+
+
 </div>
-</div>
-<div id="outline-container-orge5f1caf" class="outline-2">
-<h2 id="orge5f1caf">Notes</h2>
-<div class="outline-text-2" id="text-orge5f1caf">
-<p>
-<a href="notes/build blog with emacs and github from scratch.html">Build blog with org from scratch</a>
-</p>
-</div>
-</div>
-<div id="outline-container-orge0e7e66" class="outline-2">
-<h2 id="orge0e7e66">FEA</h2>
-<div class="outline-text-2" id="text-orge0e7e66">
-<p>
-<a href="engineering/有限元建模.html">有限元建模方法</a>
-</p>
-</div>
-</div>
-</div>
+</div></div>
 <div id="postamble" class="status">
-<hr/><p class="author">Author: Jousimies</p>
-   <p class="date">Last modified: 2022-10-21 Fri 02:09</p>
-   <p class="date">Created: 2022-10-20</p>
+<hr/><p class="author">Author: Duan Ning</p>
+   <p class="date">Last modified: 2022-10-21 Fri 01:20</p>
+   <p class="date">Created: </p>
    <p class="date">Published: 2022-10-21 Fri 02:10</p>
 </div>
 </body>
