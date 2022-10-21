@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2022-10-21 Fri 14:06 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>All-In-One 笔记系统</title>
+<meta name="author" content="Jousimeis" />
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="../css/style.css" />
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href=""> UP </a>
+ |
+ <a accesskey="H" href="../index.html"> HOME </a>
+</div><div id="preamble" class="status">
+<a href="/index.html" class="button">Home</a>
+<a href="/notes/index.html" class="button">Notes</a>
+<a href="/engineering/index.html" class="button">Engineering</a>
+<a href="/movies/index.html" class="button">Movies</a>
+<a href="/about.html" class="button">About</a>
+<hr>
+</div>
+<div id="content" class="content">
+<h1 class="title">All-In-One 笔记系统</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org5a507ae">1. 笔记内容</a>
+<ul>
+<li><a href="#org5e89aaa">1.1. 文本+格式</a></li>
+<li><a href="#orgea004ba">1.2. 图表</a></li>
+<li><a href="#orge324057">1.3. 公式</a></li>
+<li><a href="#orgc5b4a51">1.4. 文献管理</a></li>
+<li><a href="#orgf99233c">1.5. 音频和视频</a></li>
+</ul>
+</li>
+<li><a href="#orgfa36706">2. Emacs 如何实现上述的笔记管理</a>
+<ul>
+<li><a href="#org569b156">2.1. 笔记界面</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<p>
+之前在知乎上看到一个问题是：<a href="https://www.zhihu.com/question/409857680">有没有一个All in One的笔记系统</a>?。我在下面的回答中提供了一个方案就是使用 Emacs。
+</p>
+
+<p>
+那么现在说说怎么使用 Emacs 进行笔记的管理，如何做到 all-in-one。
+</p>
+
+<p>
+在上面的提问中，提问者列出了自己关于all-in-one笔记的系统的几点要求。笔记记的是什么内容呢，初步列举如下：
+</p>
+
+<div id="outline-container-org5a507ae" class="outline-2">
+<h2 id="org5a507ae"><span class="section-number-2">1.</span> 笔记内容</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+<div id="outline-container-org5e89aaa" class="outline-3">
+<h3 id="org5e89aaa"><span class="section-number-3">1.1.</span> 文本+格式</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+笔记肯定第一位的就是需要记录大量的文本内容。那么文本只能是汉字、英文、字母吗？当然不是，文本也有格式，如对文本进行加粗、斜体、引用、列表等等。文本+格式只要是个笔记软件应该都能提供（window 上的 txt 记事本不行，过于简陋）。
+</p>
+
+<p>
+但是文本与格式分离，这不是哪个软件都能做好的。如 word 就很难做到样式和内容的分离，以我的经验，它可以做到但是很难，你需要对word 有充分的了解。Latex 就很容易做到文本与样式的分离，但是它难在非所见即所得。（有什么软件你需要深度使用，但是可以对其不需要了解的吗？没有什么是纯傻瓜式的。）
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgea004ba" class="outline-3">
+<h3 id="orgea004ba"><span class="section-number-3">1.2.</span> 图表</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+我认为表格只是文本内容呈现的另一种方式，笔记系统中不需要使用过于复杂的表格。
+</p>
+
+<p>
+这里要提到 onenote 笔记软件，这个软件我很多次都想利用起来，但是最终都没能。现在想来，它就像一个画板，做笔记像画画，内容超出屏幕范围时，很难对内容有个全局的了解。相对应的是幕布类的大纲式的软件（有了解没用过，不评价）。Onenote软件作的笔记如果想要内容很规整，一个方法就是嵌套使用表格（可以很漂亮，但是不推荐）。
+</p>
+
+<p>
+图是笔记系统中一个很重要的组成部分。笔记系统中插入图我想有两种方式，一种是如word ，印象笔记的方式。一种是类似org-mode, markdown这种方式，以链接的方式插入到笔记当中。我选择第二种。
+</p>
+
+<p>
+图直接插入到笔记当中的方式，往往是专有格式的软件。这类笔记系统对于软件本体依赖过高，不利于笔记在不同系统中的转移。图直接插入到笔记当中，会导致单个笔记的体积很大，而且很难在不同的笔记中进行复用。相应的使用图片链接的方式就没有上述的问题。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge324057" class="outline-3">
+<h3 id="orge324057"><span class="section-number-3">1.3.</span> 公式</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+公式我只推荐使用 latex ，以文本的方式进行管理。如 Word 上使用 mathtype 进行公式的输入非常差，难以编排，交叉引用。
+</p>
+
+<p>
+如果你认为latex 输入公式很慢，不直观，是大概率你没有使用合适的方法。你需要的是快速输入的方法以及公式预览。Latex公式的效果看看这个<a href="https://link.zhihu.com/?target=https%3A//gitlab.com/matsievskiysv/math-preview/-/raw/master/demo.gif">demo</a>。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc5b4a51" class="outline-3">
+<h3 id="orgc5b4a51"><span class="section-number-3">1.4.</span> 文献管理</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+文献管理软件有很多，如zotero，endnote，mendeley，jabref等等。笔记系统中我推荐使用zotero，其他都不做推荐。我更喜欢的方式是直接管理bibtex文件，zotero只是我用来收集bib的工具。
+</p>
+
+<p>
+此外，还应关注的是文献文件的格式，大部份应该都是pdf 文件。
+</p>
+
+<p>
+如果是caj等格式，那么推荐你使用tampermonkey在知网上下载pdf 格式的，而不是caj格式的（我讨厌caj）。
+</p>
+
+<p>
+如果你看的是出版物，网上有很多提供的epub格式。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf99233c" class="outline-3">
+<h3 id="orgf99233c"><span class="section-number-3">1.5.</span> 音频和视频</h3>
+<div class="outline-text-3" id="text-1-5">
+<p>
+这里不过多写，我没这个需求。对此没什么实践。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfa36706" class="outline-2">
+<h2 id="orgfa36706"><span class="section-number-2">2.</span> Emacs 如何实现上述的笔记管理</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Emacs 中进行笔记写作依赖的是 org-mode，关于 org-mode 的介绍可以见其官方网站，网上也有很人写了介绍。
+</p>
+
+
+<div id="orgfc7ac19" class="figure">
+<p><img src="file:///Users/duanning/Nextcloud/L.Personal.Galaxy/roam/website/img/20220705094939.png" alt="20220705094939.png" width="600px" />
+</p>
+<p><span class="figure-number">Figure 1: </span>笔记界面</p>
+</div>
+</div>
+<div id="outline-container-org569b156" class="outline-3">
+<h3 id="org569b156"><span class="section-number-3">2.1.</span> 笔记界面</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+Emacs 上想要实现笔记还需要依赖其他的包，好在这些都是开源的，你不需要担心其突然就不能用的问题。
+</p>
+
+<p>
+文本记录需要用到 org-mode + org-roam ，org-roam 是链式笔记，对此可以知乎上搜zettelkasten。有人对此有不同的意见。我的意见是，你可以用也可以不用。好处是可以保持笔记的原子化，便于复用。
+</p>
+
+<p>
+org-mode 自带表格功能，简单的矩阵式表格使用自带的即可。如果是要实现复杂的表格，那么在org-mode 中插入 Latex 表格即可。
+</p>
+
+<p>
+图表的功能，以文件链接的方式插入。好处是org-mode 中可以直接切换是否在当前文档中显示图片。
+</p>
+
+<p>
+公式那么直接使用 latex 语法就可以啦，预览可以使用自带的功能，我推荐使用 math-preveiw这个包，输入的话开启cdlatex的功能，那么输入各种公式符号都很方便。
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<hr/><p class="author">Author: Jousimeis</p>
+   <p class="date">Last modified: 2022-10-21 Fri 14:05</p>
+   <p class="date">Created: 2022-07-05</p>
+   <p class="date">Published: 2022-10-21 Fri 14:06</p>
+</div>
+</body>
+</html>
