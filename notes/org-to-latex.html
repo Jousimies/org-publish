@@ -1,0 +1,703 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2022-10-21 Fri 20:00 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Org-mode 和 Latex 的简明教程</title>
+<meta name="author" content="Jousimies" />
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="../css/style.css" />
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="preamble" class="status">
+<a href="/index.html" class="button">Home</a>
+<a href="/notes/index.html" class="button">Notes</a>
+<a href="/engineering/index.html" class="button">Engineering</a>
+<a href="/movies/index.html" class="button">Movies</a>
+<a href="/about.html" class="button">About</a>
+<hr>
+</div>
+<div id="content" class="content">
+<h1 class="title">Org-mode 和 Latex 的简明教程</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org4b5008d">1. Latex 模板</a></li>
+<li><a href="#orgcb864d9">2. Emacs 配置</a></li>
+<li><a href="#org2df69cf">3. Org 编译 PDF 的一般流程</a></li>
+<li><a href="#org4c9d0ab">4. Org 文件头部内容配置</a>
+<ul>
+<li><a href="#orge8a72b7">4.1. documentclass</a></li>
+<li><a href="#org0720817">4.2. 页面布局</a></li>
+<li><a href="#org43e39f2">4.3. 字体大小和类型</a></li>
+<li><a href="#org8018354">4.4. 页眉和页脚</a></li>
+<li><a href="#org32a0515">4.5. 目录</a></li>
+<li><a href="#org9bf7e59">4.6. 标题</a></li>
+<li><a href="#org73386c0">4.7. 图形</a></li>
+<li><a href="#orgbe4ec6d">4.8. 图表</a></li>
+<li><a href="#org95005ab">4.9. 数学公式</a></li>
+<li><a href="#org34b014b">4.10. 代码环境</a></li>
+<li><a href="#org0385684">4.11. 文叉引用</a></li>
+<li><a href="#reference">4.12. 参考文献</a></li>
+</ul>
+</li>
+<li><a href="#orga73d043">5. Org 其他的内容</a>
+<ul>
+<li><a href="#org54af128">5.1. org source block</a></li>
+<li><a href="#orgf7c4bd7">5.2. header arguments</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org4b5008d" class="outline-2">
+<h2 id="org4b5008d"><span class="section-number-2">1.</span> Latex 模板</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+虽然使用模板可以大大简化自己需要配置的内容，但是最后还是决定自己制作一个自用的最小化的配置文件。毕竟使用自己的配置，会很容易改。而且模板文件使用的 <code>sty</code> 文件，改起来比较头大。
+</p>
+
+<p>
+如果想要使用模板的可以看看 <a href="https://github.com/ElegantLaTeX/ElegantNote">ElegantNote</a> ，看起来还不错。Macos 中使用 ElegantNote 这个模板，需要把 ElegantNote 文件夹中的 <code>.cls</code> 文件放置到 <code>~/Library/texmf</code> 这个文件夹中。如果这个文件夹不存在，自己创建一个就可以。 <code>Finder</code> 中可能看不到 <code>Library</code> 这个文件夹，使用 <code>Terminal</code> 操作即可。
+</p>
+
+<p>
+此配置，是基于 <code>ctex</code> 这个包，利用 <code>xelatex</code> 编译。
+</p>
+
+<p>
+我通常只编辑  <code>org</code>  文档，不会直接写  <code>latex</code>  文件，在需要的时候将  <code>org</code>  文件直接转为  <code>pdf</code>  文档，只在需要找查错误时才会转  <code>tex</code>  文档。如果有其他的需要，如写 blog ，则转成 <code>md</code> 文件，也可以直接转 <code>html</code> 文件。当需要转 <code>docx</code> 文件时，利用 <code>pandoc</code> 实现。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgcb864d9" class="outline-2">
+<h2 id="orgcb864d9"><span class="section-number-2">2.</span> Emacs 配置</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Emacs 中关于 <code>latex</code> 的配置如下，主要配置了  <code>book</code>  和  <code>article</code>  这两个文档格式。
+</p>
+
+<p>
+小说啥的，我会使用  <code>book</code>  这个配置将下载到的小说  <code>txt</code>  文档编译成  <code>pdf</code>  保存。日常使用就使用  <code>article</code>  这个配置。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #81A1C1;">(</span><span style="color: #81A1C1;">with-eval-after-load</span> 'ox-latex
+  <span style="color: #B48EAD;">(</span><span style="color: #81A1C1;">setq</span> org-latex-classes nil<span style="color: #B48EAD;">)</span>
+  <span style="color: #B48EAD;">(</span>add-to-list 'org-latex-classes
+           '<span style="color: #A3BE8C;">(</span><span style="color: #A3BE8C;">"book"</span>
+         <span style="color: #A3BE8C;">"\\documentclass[UTF8,twoside,a4paper,12pt,openright]{ctexrep}</span>
+<span style="color: #A3BE8C;">        [NO-DEFAULT-PACKAGES]</span>
+<span style="color: #A3BE8C;">        [NO-PACKAGES]</span>
+<span style="color: #A3BE8C;">        [EXTRA]"</span>
+         <span style="color: #5D80AE;">(</span><span style="color: #A3BE8C;">"\\chapter{%s}"</span> . <span style="color: #A3BE8C;">"\\chapter*{%s}"</span><span style="color: #5D80AE;">)</span>
+         <span style="color: #5D80AE;">(</span><span style="color: #A3BE8C;">"\\section{%s}"</span> . <span style="color: #A3BE8C;">"\\section*{%s}"</span><span style="color: #5D80AE;">)</span>
+         <span style="color: #5D80AE;">(</span><span style="color: #A3BE8C;">"\\subsection{%s}"</span> . <span style="color: #A3BE8C;">"\\subsection*{%s}"</span><span style="color: #5D80AE;">)</span>
+         <span style="color: #5D80AE;">(</span><span style="color: #A3BE8C;">"\\subsubsection{%s}"</span> . <span style="color: #A3BE8C;">"\\subsubsection*{%s}"</span><span style="color: #5D80AE;">)</span>
+         <span style="color: #5D80AE;">(</span><span style="color: #A3BE8C;">"\\paragraph{%s}"</span> . <span style="color: #A3BE8C;">"\\paragraph*{%s}"</span><span style="color: #5D80AE;">)</span>
+         <span style="color: #5D80AE;">(</span><span style="color: #A3BE8C;">"\\subparagraph{%s}"</span> . <span style="color: #A3BE8C;">"\\subparagraph*{%s}"</span><span style="color: #5D80AE;">)</span><span style="color: #A3BE8C;">)</span><span style="color: #B48EAD;">)</span>
+  <span style="color: #B48EAD;">(</span>add-to-list 'org-latex-classes '<span style="color: #A3BE8C;">(</span><span style="color: #A3BE8C;">"article"</span>
+                    <span style="color: #A3BE8C;">"\\documentclass{ctexart}</span>
+<span style="color: #A3BE8C;">        [NO-DEFAULT-PACKAGES]</span>
+<span style="color: #A3BE8C;">        [NO-PACKAGES]</span>
+<span style="color: #A3BE8C;">        [EXTRA]"</span>
+                    <span style="color: #5D80AE;">(</span><span style="color: #A3BE8C;">"\\section{%s}"</span> . <span style="color: #A3BE8C;">"\\section*{%s}"</span><span style="color: #5D80AE;">)</span>
+                    <span style="color: #5D80AE;">(</span><span style="color: #A3BE8C;">"\\subsection{%s}"</span> . <span style="color: #A3BE8C;">"\\subsection*{%s}"</span><span style="color: #5D80AE;">)</span>
+                    <span style="color: #5D80AE;">(</span><span style="color: #A3BE8C;">"\\subsubsection{%s}"</span> . <span style="color: #A3BE8C;">"\\subsubsection*{%s}"</span><span style="color: #5D80AE;">)</span>
+                    <span style="color: #5D80AE;">(</span><span style="color: #A3BE8C;">"\\paragraph{%s}"</span> . <span style="color: #A3BE8C;">"\\paragraph*{%s}"</span><span style="color: #5D80AE;">)</span>
+                    <span style="color: #5D80AE;">(</span><span style="color: #A3BE8C;">"\\subparagraph{%s}"</span> . <span style="color: #A3BE8C;">"\\subparagraph*{%s}"</span><span style="color: #5D80AE;">)</span><span style="color: #A3BE8C;">)</span><span style="color: #B48EAD;">)</span>
+
+  <span style="color: #B48EAD;">(</span><span style="color: #81A1C1;">setq</span> org-latex-listings 'minted
+    org-export-latex-listings 'minted<span style="color: #B48EAD;">)</span>
+
+  <span style="color: #B48EAD;">(</span><span style="color: #81A1C1;">setq</span> org-latex-pdf-process
+    '<span style="color: #A3BE8C;">(</span><span style="color: #A3BE8C;">"xelatex -8bit --shell-escape</span>
+<span style="color: #A3BE8C;">             -interaction=nonstopmode -output-directory %o %f"</span>
+      <span style="color: #A3BE8C;">"bibtex -shell-escape %b"</span>
+      <span style="color: #A3BE8C;">"xelatex -8bit --shell-escape</span>
+<span style="color: #A3BE8C;">             -interaction=nonstopmode -output-directory %o %f"</span>
+      <span style="color: #A3BE8C;">"xelatex -8bit --shell-escape</span>
+<span style="color: #A3BE8C;">             -interaction=nonstopmode -output-directory %o %f"</span>
+      <span style="color: #A3BE8C;">"rm -fr %b.out %b.log %b.tex %b.brf %b.bbl"</span><span style="color: #A3BE8C;">)</span>
+    org-latex-logfiles-extensions '<span style="color: #A3BE8C;">(</span><span style="color: #A3BE8C;">"lof"</span> <span style="color: #A3BE8C;">"lot"</span> <span style="color: #A3BE8C;">"tex~"</span> <span style="color: #A3BE8C;">"aux"</span> <span style="color: #A3BE8C;">"idx"</span> <span style="color: #A3BE8C;">"log"</span> <span style="color: #A3BE8C;">"out"</span> <span style="color: #A3BE8C;">"toc"</span>
+<span style="color: #A3BE8C;">"nav"</span> <span style="color: #A3BE8C;">"snm"</span> <span style="color: #A3BE8C;">"vrb"</span> <span style="color: #A3BE8C;">"dvi"</span> <span style="color: #A3BE8C;">"fdb_latexmk"</span> <span style="color: #A3BE8C;">"blg"</span> <span style="color: #A3BE8C;">"brf"</span> <span style="color: #A3BE8C;">"fls"</span> <span style="color: #A3BE8C;">"entoc"</span> <span style="color: #A3BE8C;">"ps"</span> <span style="color: #A3BE8C;">"spl"</span> <span style="color: #A3BE8C;">"bbl"</span><span style="color: #A3BE8C;">)</span>
+    org-latex-prefer-user-labels t<span style="color: #B48EAD;">)</span><span style="color: #81A1C1;">)</span>
+
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org2df69cf" class="outline-2">
+<h2 id="org2df69cf"><span class="section-number-2">3.</span> Org 编译 PDF 的一般流程</h2>
+<div class="outline-text-2" id="text-3">
+<ul class="org-ul">
+<li><p>
+导言区内容
+</p>
+
+<p>
+一篇 <code>PDF</code> 的样式，取决于此处的设置。日常配置好两个常用的模板即可处理大部分的文档写作工作。目前，我还没有配置 <code>report</code> 类型的模板。有时间的时候，处理一下。
+</p>
+
+<p>
+这部分的详细内容见第 <a href="#org4c9d0ab">4</a> 节，己包含常用的配置。在 Emacs 中可以将它们组合后，制作成模板，当需要的时候，插入即可，很方便。 <code>yasnippet</code> 和 <code>tempel</code> 这两个包都很好用。
+</p></li>
+
+<li><p>
+正文具体内容的写作。
+</p>
+
+<p>
+内容这部分是一篇文章的主要部分，需要花大量的时间和精力进行。写本文的目的也就将除此之外的部分简化，减少程序性的事务消消耗的精力。
+</p></li>
+
+<li>通过 <code>C-c C-e l o</code> 编译 pdf 文件，并打开预览。</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org4c9d0ab" class="outline-2">
+<h2 id="org4c9d0ab"><span class="section-number-2">4.</span> Org 文件头部内容配置</h2>
+<div class="outline-text-2" id="text-4">
+</div>
+<div id="outline-container-orge8a72b7" class="outline-3">
+<h3 id="orge8a72b7"><span class="section-number-3">4.1.</span> documentclass</h3>
+<div class="outline-text-3" id="text-4-1">
+<pre class="example" id="orgf30ccee">
+#+TITLE: Emacs 中 org-mode 文档编译 PDF 的基本设置
+#+DATE: 2022-04-25
+#+AUTHOR: Jousimies
+#+LATEX_CLASS:article
+#+LATEX_CLASS_OPTIONS: [12pt,a4paper]
+#+OPTIONS: toc:nil date:t author:t
+</pre>
+
+<p>
+其中 <code>#+title:</code> 是文章的名字。如果需要不输出 <code>title</code> ，增加下面一行说明，输出 pdf 的时候就不会生成标题。
+</p>
+
+<p>
+<code>#+LATEX_CLASS</code> 有默认值，可以见 <code>org-latex-default-class</code> ，默认使用 <code>article</code> 。 <code>#+LATEX_CLASS</code> 还有 <code>article</code> ， <code>book</code> 等，可以查看 <code>org-latex-classes</code> 这个值。
+</p>
+
+<p>
+<code>OPTIONS:</code> 中可以指定是否输出目录，日期，作者。其中 <code>draft</code> 选项可以生成草稿文档，不编译图片，加快编译的速度。当需要生成最终稿时，将 <code>draft</code> 改成 <code>final</code> 。
+</p>
+
+<p>
+<code>#+LATEX_CLASS_OPTIONS</code> 设置 <code>documentclass</code> 中的可选参数。如 <code>[UTF8,a4paper,12pt]</code> 。其他的参数看手册。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0720817" class="outline-3">
+<h3 id="org0720817"><span class="section-number-3">4.2.</span> 页面布局</h3>
+<div class="outline-text-3" id="text-4-2">
+<pre class="example" id="orgfef2177">
+#+LATEX_HEADER: \usepackage{geometry}
+#+LATEX_HEADER: \geometry{top=2cm,bottom=2cm,right=2cm,left=2.5cm}
+#+LATEX_HEADER: \geometry{headsep=0.5cm}
+#+LATEX_HEADER: \usepackage{setspace}
+#+LATEX_HEADER: \setlength{\baselineskip}{22pt}
+#+LATEX_HEADER: \setlength{\parskip}{0pt}
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org43e39f2" class="outline-3">
+<h3 id="org43e39f2"><span class="section-number-3">4.3.</span> 字体大小和类型</h3>
+<div class="outline-text-3" id="text-4-3">
+<pre class="example" id="org7e4842c">
+#+LATEX_HEADER: \usepackage{fontspec}
+#+LATEX_HEADER: \setCJKmainfont{SimSun}
+#+LATEX_HEADER: \setCJKmonofont{SimSun}
+#+LATEX_HEADER: \setCJKfamilyfont{kaiti}{Kaiti SC}
+#+LATEX_HEADER: \newcommand{\KaiTi}{\CJKfamily{kaiti}}
+#+LATEX_HEADER: \setCJKfamilyfont{heiti}{Hei}
+#+LATEX_HEADER: \newcommand{\HeiTi}{\CJKfamily{heiti}}
+#+LATEX_HEADER: \setmainfont{Times New Roman}
+
+#+LATEX_HEADER: \newcommand{\chuhao}{\fontsize{42.2pt}{\baselineskip}\selectfont}
+#+LATEX_HEADER: \newcommand{\xiaochu}{\fontsize{36.1pt}{\baselineskip}\selectfont}
+#+LATEX_HEADER: \newcommand{\yihao}{\fontsize{26.1pt}{\baselineskip}\selectfont}
+#+LATEX_HEADER: \newcommand{\xiaoyi}{\fontsize{24.1pt}{\baselineskip}\selectfont}
+#+LATEX_HEADER: \newcommand{\erhao}{\fontsize{22.1pt}{\baselineskip}\selectfont}
+#+LATEX_HEADER: \newcommand{\xiaoer}{\fontsize{18.1pt}{\baselineskip}\selectfont}
+#+LATEX_HEADER: \newcommand{\sanhao}{\fontsize{16.1pt}{\baselineskip}\selectfont}
+#+LATEX_HEADER: \newcommand{\xiaosan}{\fontsize{15.1pt}{\baselineskip}\selectfont}
+#+LATEX_HEADER: \newcommand{\sihao}{\fontsize{14.1pt}{\baselineskip}\selectfont}
+#+LATEX_HEADER: \newcommand{\xiaosi}{\fontsize{12.1pt}{\baselineskip}\selectfont}
+#+LATEX_HEADER: \newcommand{\wuhao}{\fontsize{10.5pt}{\baselineskip}\selectfont}
+#+LATEX_HEADER: \newcommand{\xiaowu}{\fontsize{9.0pt}{\baselineskip}\selectfont}
+#+LATEX_HEADER: \newcommand{\liuhao}{\fontsize{7.5pt}{\baselineskip}\selectfont}
+#+LATEX_HEADER: \newcommand{\xiaoliu}{\fontsize{6.5pt}{\baselineskip}\selectfont}
+#+LATEX_HEADER: \newcommand{\qihao}{\fontsize{5.5pt}{\baselineskip}\selectfont}
+#+LATEX_HEADER: \newcommand{\bahao}{\fontsize{5.0pt}{\baselineskip}\selectfont}
+</pre>
+
+<p>
+这个根据需要自己配吧。
+</p>
+
+<p>
+如果需要设置字体的大小，可以使用 <code>fontsize</code> 包。在 <code>org-mode</code> 中增加以下命令：
+</p>
+
+<p>
+<code>#+LATEX_HEADER: \usepackage[fontsize=12pt]{fontsize}</code>
+</p>
+
+<p>
+对于文中局部字体大小的设置，可以使用 <code>HUGErrr</code> 等命令，其他的可用命令参看帮助手册。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org8018354" class="outline-3">
+<h3 id="org8018354"><span class="section-number-3">4.4.</span> 页眉和页脚</h3>
+<div class="outline-text-3" id="text-4-4">
+<pre class="example" id="org133ba7e">
+#+LATEX_HEADER: \usepackage{fancyhdr}
+#+LATEX_HEADER: \pagestyle{fancy}
+#+LATEX_HEADER: \fancypagestyle{plain}{\pagestyle{fancy}}
+#+LATEX_HEADER: \fancyhead{}
+#+LATEX_HEADER: \fancyhead[C]{\KaiTi \wuhao XXX}
+#+LATEX_HEADER: \fancyfoot[C]{\thepage}
+</pre>
+
+<p>
+页眉和页脚的设置使用 <code>fancyhdr</code> 这个包，基本使用方法可以看帮助手册。对于目录页，插图页，前言页，正文分别使用不同的页眉和页脚，是在需要重置样式的地方，单独设置 <code>fancyhead, fancyfoot</code> 。
+</p>
+<pre class="example" id="org250d37c">
+#+begin_export latex
+  \fancypagestyle{toc}{
+    \fancyhf{}
+    \fancyfoot[C]{\thepage}
+  }
+
+  \pagestyle{toc}
+  \setcounter{page}{1}
+  \pagenumbering{Roman}
+  \tableofcontents
+  \newpage
+#+end_export
+</pre>
+
+
+<pre class="example" id="org6458b51">
+#+begin_export latex
+\fancyhead{}
+\fancyhead{}
+\renewcommand{\headrulewidth}{0pt}
+#+end_export
+</pre>
+
+
+<pre class="example" id="org4e24fd3">
+#+begin_export latex
+\setcounter{page}{1}
+\pagenumbering{arabic}
+\fancyhead{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyhead[CO,CE]{XXX}
+\fancyhead[R]{\leftmark}
+\fancyhead[L]{Jousimies}
+\fancyfoot[R]{\thepage}
+#+end_export
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org32a0515" class="outline-3">
+<h3 id="org32a0515"><span class="section-number-3">4.5.</span> 目录</h3>
+<div class="outline-text-3" id="text-4-5">
+<p>
+通过 <code>secnumdepth</code> 控制目录的深度，根据需要来设置就好。
+</p>
+<pre class="example" id="orgde42545">
+#+LATEX_HEADER_EXTRA: \setcounter{secnumdepth}{2}
+</pre>
+
+<p>
+当使用 <code>article</code> 这个样式的时候，目录这两个字不会居中。当使用 <code>book</code> 的时候，会居中。 <code>book</code> 这个样式中有 <code>chapter</code> 这一个控制， <code>chapter</code> 是设置为居中显示的，相应的目录这两个字也是居中显示。
+</p>
+
+<p>
+后期研究下，怎么单独设置某一级标题居中显示。
+</p>
+</div>
+</div>
+<div id="outline-container-org9bf7e59" class="outline-3">
+<h3 id="org9bf7e59"><span class="section-number-3">4.6.</span> 标题</h3>
+<div class="outline-text-3" id="text-4-6">
+<p>
+主要是使用了 <code>titlesec</code> 这个包，设置了 <code>titleformat</code> 和 <code>titlespace</code> 这两个参数，分别控制着标题的样式和标题前后的行间距。不设置这个值的话，当使用 <code>book</code> 这个样式时，行间距会很难看。 <code>titleformat</code> 中可以设置字体的大小和类型。
+</p>
+
+<pre class="example" id="orgc7c8511">
+#+LATEX_HEADER: \usepackage{titlesec}
+#+LATEX_HEADER: \titleformat{\section}[block]{\normalfont\xiaosan\bfseries\HeiTi}{\thesection}{10pt}{\xiaosan}
+#+LATEX_HEADER: \titleformat{\subsection}[block]{\normalfont\sihao\bfseries\HeiTi}{\thesubsection}{10pt}{\sihao}
+#+LATEX_HEADER: \titleformat{\subsubsection}[block]{\normalfont\sihao\bfseries\HeiTi}{\thesubsubsection}{10pt}{\sihao}
+#+LATEX_HEADER: \titlespacing{\section} {0pt}{0pt}{0pt}
+#+LATEX_HEADER: \titlespacing{\subsection} {0pt}{0pt}{0pt}
+#+LATEX_HEADER: \titlespacing{\subsubsection} {0pt}{0pt}{0pt}
+</pre>
+
+<p>
+当使用 org-mode 编译 latex 时，如果想要使用自己设置的 label ，可以给 org-mode 的 headline 设置 <code>CUSTOM_ID</code> 属性。同时需要设置 <code>org-latex-prefer-user-labels</code> 。
+</p>
+</div>
+</div>
+<div id="outline-container-org73386c0" class="outline-3">
+<h3 id="org73386c0"><span class="section-number-3">4.7.</span> 图形</h3>
+<div class="outline-text-3" id="text-4-7">
+<p>
+图形的话，就是使用 <code>graphicx</code> 和 <code>subfigure</code> 这两个包。
+</p>
+<pre class="example" id="org22d1dd2">
+#+LATEX_HEADER: \usepackage{graphicx}
+#+LATEX_HEADER: \usepackage{subfigure}
+#+LATEX_HEADER: \usepackage{caption}
+#+LATEX_HEADER: \captionsetup{font={small}}
+</pre>
+
+<p>
+在 org-mode 中我使用 <code>org-download</code> 这个包进行图片的管理，通过 <code>org-download-clipboard</code> 将图片复制到 org 文档中。当需要插入己有图片时，我会使用 <code>org-insert-link</code> 插入 <code>file</code> 类型的文件。
+</p>
+
+<p>
+图形环境中 <code>placement</code> 这个参数有五个选项 <code>!htbp</code> ，分别对应的是 <code>here,top,bottom,page of float</code>, 当图形位置不在文本附近时或者你需要强制图形在文本附近，可以加入 <code>!</code> 来强制实现。一般情况下，使用 <code>htbp</code> 基本上能满足需要了。
+</p>
+
+<p>
+当一行只有一张图时，使用 <code>org-download-clipboard</code> 产生的配置如图 \ref{org-mode 图形配置} 所示：
+</p>
+<pre class="example" id="org8b4c842">
+#+NAME: org-mode 图形配置
+#+CAPTION: org-mode 图形配置
+#+ATTR_LATEX: :width 10cm :placement [h]
+[[file:~/Nextcloud/L.Personal.Galaxy/roam/pic/20220424232743-org-mode 图形配置.png]]
+</pre>
+
+<p>
+图中 <code>#+NAME</code> 当需要引用时，可以通过在正文中使用 <code>ref{}</code> 来实现引用。 <code>#+CAPTION</code> 是图片的标签，一般居于图片的下方。 <code>#+ATTR_LATEX</code> 可以控制图片在文章中的大小，单张图设置 <code>:width 8cm</code> 即可。
+</p>
+
+<p>
+当一行有两张图时，我会插入模板，如下：
+</p>
+<pre class="example" id="orgf50f412">
+\begin{figure}[htbp]
+  \centering
+  \subfigure[]{
+    \begin{minipage}[t]{0.5\linewidth}
+  \centering
+  \includegraphics[width=\linewidth]{}
+  \end{minipage}
+    }
+  \subfigure[]{
+    \begin{minipage}[t]{0.5\linewidth}
+  \centering
+  \includegraphics[width=\linewidth]{}
+  \end{minipage}
+    }
+  \centering
+  \caption{fig:}
+  \end{figure}
+</pre>
+
+<p>
+当有四张图时，我会使用下面的配置：
+</p>
+<pre class="example" id="org76a29a5">
+\begin{figure}[htbp]
+  \centering
+  \subfigure[]{
+    \begin{minipage}[t]{0.5\linewidth}
+  \centering
+  \includegraphics[width=\linewidth]{}
+  \end{minipage}}
+  \subfigure[]{
+    \begin{minipage}[t]{0.5\linewidth}
+  \centering
+  \includegraphics[width=\linewidth]{}
+  \end{minipage}}
+  \subfigure[]{
+    \begin{minipage}[t]{0.5\linewidth}
+  \centering
+  \includegraphics[width=\linewidth]{}
+  \end{minipage}}
+  \subfigure[]{
+    \begin{minipage}[t]{0.5\linewidth}
+  \centering
+  \includegraphics[width=\linewidth]{}
+  \end{minipage}}
+  \centering
+  \caption{fig:}
+  \end{figure}
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgbe4ec6d" class="outline-3">
+<h3 id="orgbe4ec6d"><span class="section-number-3">4.8.</span> 图表</h3>
+<div class="outline-text-3" id="text-4-8">
+<p>
+这里的问题还很大，得好好琢磨一下。
+</p>
+
+<p>
+对于较小的表格，使用 org 中的表格即可。对于超长的表格，需要特别设置。
+</p>
+
+
+<div id="org7c99728" class="figure">
+<p><img src="file:///Users/duanning/Nextcloud/L.Personal.Galaxy/roam/pic/20220425232323较小的表格.png" alt="20220425232323较小的表格.png" />
+</p>
+<p><span class="figure-number">Figure 1: </span>普通表格</p>
+</div>
+
+<p>
+对于超长表格可以使用 <code>adjustbox</code> 包。把下面的命令加入 org 文档的头部。
+</p>
+
+<p>
+<code>#+LATEX_HEADER: \usepackage{adjustbox}</code>
+</p>
+
+
+<div id="org8744819" class="figure">
+<p><img src="file:///Users/duanning/Nextcloud/L.Personal.Galaxy/roam/pic/20220425232446超长表格.png" alt="20220425232446超长表格.png" />
+</p>
+<p><span class="figure-number">Figure 2: </span>超长表格</p>
+</div>
+
+
+
+<div id="org8da5188" class="figure">
+<p><img src="file:///Users/duanning/Nextcloud/L.Personal.Galaxy/roam/pic/20220425232803表格导出效果.png" alt="20220425232803表格导出效果.png" />
+</p>
+<p><span class="figure-number">Figure 3: </span>表格导出效果</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org95005ab" class="outline-3">
+<h3 id="org95005ab"><span class="section-number-3">4.9.</span> 数学公式</h3>
+<div class="outline-text-3" id="text-4-9">
+<p>
+<code>Org-mode</code> 中可以使用三种方式输入公式。
+</p>
+<ul class="org-ul">
+<li>行内公式</li>
+<li>行间公式，不带编号</li>
+<li>行间公式，带编号</li>
+</ul>
+
+
+<p>
+行内公式使用 <code>$$</code> ，不带编号的行间公式使用 <code>\[\]</code> ，带编号的行间公式需要使用 <code>latex</code> 的 <code>equation</code> 环境。
+</p>
+
+
+<p>
+此处是行内公式 \(x^{2} + y^{2} = C\) 。
+</p>
+
+<p>
+以下是不带编号的行间公式：
+\[x^{2} + y^{2} = C\]
+</p>
+
+<p>
+以下是带编号的行内公式：
+</p>
+<div class="equation" id="org1fa8bfc">
+<p>
+x<sup>2</sup> + y<sup>2</sup> = C
+</p>
+
+</div>
+
+<p>
+公式的引用通过使用 <code>\ref{label}</code> 的方式，引用 <code>equation</code> 设置的 <code>label</code> 实现。公式的三种方式的导出效见 \ref{公式效果} 。
+</p>
+
+
+<div id="org825e69d" class="figure">
+<p><img src="file:///Users/duanning/Nextcloud/L.Personal.Galaxy/roam/pic/20220425235441org-mode 导出公式效果.png" alt="20220425235441org-mode 导出公式效果.png" />
+</p>
+<p><span class="figure-number">Figure 4: </span>公式效果</p>
+</div>
+
+<p>
+如果需要设置数学字体的话，需要如下配置，见图 \ref{数学字体配置}：
+</p>
+
+<pre class="example" id="org695652d">
+#+LATEX_HEADER: \usepackage[namelimits]{amsmath}
+#+LATEX_HEADER: \usepackage{amssymb}
+#+LATEX_HEADER: \usepackage{mathrsfs}
+</pre>
+
+<p>
+在 <code>org-mode</code> 中如何快速的输入数学符号呢？可以使用 <code>org-cdlatex-mode</code> 。
+</p>
+
+<p>
+在 <code>Emacs</code> 的配置文件中加入以下配置即可。使用时输入 <code>`</code> ，或者 <code>``</code> ，或者 <code>```</code> 触发候选列表。还可以使用 <code>'</code> 触发。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #81A1C1;">(</span>add-hook 'org-mode-hook 'turn-on-org-cdlatex<span style="color: #81A1C1;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org34b014b" class="outline-3">
+<h3 id="org34b014b"><span class="section-number-3">4.10.</span> 代码环境</h3>
+<div class="outline-text-3" id="text-4-10">
+<p>
+Org-mode 中的代码环境可以使用 <code>listings</code> 和 <code>minted</code> 这两种方式。目前使用推荐使用 <code>minted</code> 这种方式，比较新。
+</p>
+
+<p>
+<code>minted</code> 需要安装 <code>pygemnts</code> 这个包，终端执行下面的命令。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">pip3 install pygments
+</pre>
+</div>
+
+<p>
+别外，编译时需要加入 <code>eshell-escape</code> 这个命令参数，见上方 Emacs 中的配置。这个很重要，否则当编译的时候会报错。
+</p>
+</div>
+</div>
+<div id="outline-container-org0385684" class="outline-3">
+<h3 id="org0385684"><span class="section-number-3">4.11.</span> 文叉引用</h3>
+<div class="outline-text-3" id="text-4-11">
+<p>
+<code>Org-mode</code> 中交叉引用可以使用 <code>[[]]</code> ，也可以给 <code>title</code> 设置 <code>custom_id</code> ，通过 <code>[[#custom_id]]</code> 的方式实现交叉引用。
+</p>
+
+<p>
+相关的讨论见 <a href="https://tex.stackexchange.com/questions/103683/referring-to-specific-sections-in-org-mode-latex">Referring to specific sections in org-mode latex</a> 。
+</p>
+</div>
+</div>
+<div id="outline-container-reference" class="outline-3">
+<h3 id="reference"><span class="section-number-3">4.12.</span> 参考文献</h3>
+<div class="outline-text-3" id="text-reference">
+
+<div id="org1b3d486" class="figure">
+<p><img src="file:///Users/duanning/Nextcloud/L.Personal.Galaxy/roam/pic/参考文献.png" alt="参考文献.png" />
+</p>
+<p><span class="figure-number">Figure 5: </span>参考文献</p>
+</div>
+
+<p>
+<code>org 9.5.2</code> 己经内置了 <code>org-cite</code> 。参考文献的格式设置见 <code>cite_export</code> 。我一般使用 <code>chinese-gb7714</code> 这个，具体的文件可以去 <code>zotero</code> 的官网下载。
+</p>
+
+<p>
+设置 <code>UNNUMBERED</code> 这个 property ，目录中就会不显示参考文献这个标题，通常也不需要显示。
+</p>
+
+<p>
+默认的参考文献间距过大，使用 <code>#+LATEX_HEADER: \usepackage{bibspacing}</code> 这个文件，此文件用内容是网上抄来的一段代码，具体的内容如下，使用时将下面的内容保存到 <code>bibspacing.sty</code> 中，将该文件放到 <code>/usr/local/texlive/2021/texmf-dist/tex/latex/bibspacing</code> 文件夹中，然后执行 <code>sudo texhash</code> 即可：
+</p>
+<pre class="example" id="org8d4b6f1">
+  \newdimen\bibindent
+\setlength\bibindent{1.5em}
+\newdimen\bibspacing
+\setlength\bibspacing\z@
+\renewenvironment{thebibliography}[1]{%
+  \section*{\refname
+	\@mkboth{\MakeUppercase\refname}{\MakeUppercase\refname}}%
+  \list{\@biblabel{\@arabic\c@enumiv}}%
+	   {\settowidth\labelwidth{\@biblabel{#1}}%
+	\leftmargin\labelwidth
+	\advance\leftmargin\labelsep
+	\itemsep\z@skip    % should this be commented out?
+	\parsep\z@skip     % should this be commented out?
+	\@openbib@code
+	\usecounter{enumiv}%
+	\let\p@enumiv\@empty
+	\renewcommand\theenumiv{\@arabic\c@enumiv}}%
+  \sloppy\clubpenalty4000\widowpenalty4000%
+  \sfcode`\.\@m}
+ {\def\@noitemerr
+   {\@latex@warning{Empty `thebibliography' environment}}%
+  \endlist}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orga73d043" class="outline-2">
+<h2 id="orga73d043"><span class="section-number-2">5.</span> Org 其他的内容</h2>
+<div class="outline-text-2" id="text-5">
+</div>
+<div id="outline-container-org54af128" class="outline-3">
+<h3 id="org54af128"><span class="section-number-3">5.1.</span> org source block</h3>
+<div class="outline-text-3" id="text-5-1">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">#+NAME: &lt;name&gt;
+#+BEGIN_SRC &lt;language&gt; &lt;switches&gt; &lt;header arguments&gt;
+   &lt;body&gt;
+#+END_SRC
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #81A1C1;">import</span> sys
+
+<span style="color: #81A1C1;">print</span> sys.version
+<span style="color: #81A1C1;">print</span> sys.prefix
+</pre>
+</div>
+
+<p>
+处理代码块的运行结果由 <code>:session</code> 与 <code>:results</code> 这两个 <a href="#orgf7c4bd7">5.2</a> 共同决定
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf7c4bd7" class="outline-3">
+<h3 id="orgf7c4bd7"><span class="section-number-3">5.2.</span> header arguments</h3>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<hr><div class="generated">Created with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 28.2 (<a href="https://orgmode.org">Org</a> mode 9.5.5) on MacOS</div>
+</div>
+</body>
+</html>

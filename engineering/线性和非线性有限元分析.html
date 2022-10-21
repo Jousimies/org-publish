@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2022-10-21 Fri 20:00 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>线性和非线性有限元分析</title>
+<meta name="author" content="Jousimies" />
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="../css/style.css" />
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="preamble" class="status">
+<a href="/index.html" class="button">Home</a>
+<a href="/notes/index.html" class="button">Notes</a>
+<a href="/engineering/index.html" class="button">Engineering</a>
+<a href="/movies/index.html" class="button">Movies</a>
+<a href="/about.html" class="button">About</a>
+<hr>
+</div>
+<div id="content" class="content">
+<h1 class="title">线性和非线性有限元分析</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orgabe6efa">1. Links</a></li>
+</ul>
+</div>
+</div>
+<p>
+线性分析指的是施加的力和对应的变形之间是线性的关系，在材料的角度指的是应力和应变之间线性的。
+</p>
+
+<p>
+有限元中的线性分析，其中线性是什么意思？这里的线性指的是材料的应力应变关系是线性的，结构的应力和位移关系是线性的。\(\{σ\}=[D] \{ε\}\) , \(\{ε\}=[B] \{δ\}\) 。在加载的过程中，刚度矩阵总是一个常数。
+</p>
+
+<p>
+那么非线性又是指的什么？Nonlinear effects can originate from geometrical nonlinearity’s (i.e. large deformations), material nonlinearity’s (i.e. elasto-plastic material), and contact. 非线性的可能是几何的非线性，材料的非线性，以及约束和接触非线性。它们会导致刚度矩阵不是一个常数，而是随着加载发生变化。
+</p>
+<div id="outline-container-orgabe6efa" class="outline-2">
+<h2 id="orgabe6efa"><span class="section-number-2">1.</span> Links</h2>
+<div class="outline-text-2" id="text-1">
+<ul class="org-ul">
+<li><a href="https://zhuanlan.zhihu.com/p/120879051">https://zhuanlan.zhihu.com/p/120879051</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<hr><div class="generated">Created with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 28.2 (<a href="https://orgmode.org">Org</a> mode 9.5.5) on MacOS</div>
+</div>
+</body>
+</html>

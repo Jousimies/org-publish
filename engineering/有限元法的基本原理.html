@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2022-10-21 Fri 20:00 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>有限元法的基本原理</title>
+<meta name="author" content="Jousimies" />
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="../css/style.css" />
+</head>
+<body>
+<div id="preamble" class="status">
+<a href="/index.html" class="button">Home</a>
+<a href="/notes/index.html" class="button">Notes</a>
+<a href="/engineering/index.html" class="button">Engineering</a>
+<a href="/movies/index.html" class="button">Movies</a>
+<a href="/about.html" class="button">About</a>
+<hr>
+</div>
+<div id="content" class="content">
+<h1 class="title">有限元法的基本原理</h1>
+<p>
+求解原来的场函数的无穷多自由度问题转换成求解场函数结点值的有限自由度问题。
+</p>
+
+<ol class="org-ol">
+<li>确定工程问题或物理问题的数学模型。
+所谓数学模型，也就是确定以下几个变量：基本变量、基本方程、求解域、边界条件。</li>
+<li>使用有限元法对工程问题进行数值求解的基本要点
+<ol class="org-ol">
+<li>将一个表示结构或连续体的求解域离散为若干个子域（单元），并通过它们的边界上的点相互联结成组合体。各个单元通过角结点相互联结。</li>
+<li>用每个单元内所假设的近似函数分片的表示全求解域内待求的未知场变量。
+每个单元内的近似函数由未知场函数及其导数在单元各个结点上的数值和与其对应的插值函数来表达（矩阵形式）。
+在联结相邻单元的结点上，场函数应具有相同的数值，它们是数值求解的基本未知量。
+求解原来的场函数的无穷多自由度问题转换成求解场函数结点值的有限自由度问题。</li>
+</ol></li>
+<li>通过和原问题数学模型等效的变分原理或加权余量法，建立求解基本未知量（场函数的结点值）的代数方程组或者常微分方程组。
+此方程组为有限元求解方程，并表示成规范化的矩阵形式。</li>
+</ol>
+
+<p>
+<b>建立有限元方程的变分原理或加权余量法在数学上己证明是微分方程和边界条件的等效积分形式。</b>
+</p>
+
+<p>
+有限元研究的是复杂变形体。那么如何处理复杂变形体呢？我们使用内部描述和外部描述。有限元就是上述两个描述的等效积分形式。
+</p>
+</div>
+<div id="postamble" class="status">
+<hr><div class="generated">Created with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 28.2 (<a href="https://orgmode.org">Org</a> mode 9.5.5) on MacOS</div>
+</div>
+</body>
+</html>
